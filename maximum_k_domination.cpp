@@ -120,7 +120,7 @@ void solve()
       //not base case
       vector<vector<int>> knapsack;
       //dp[0][0]
-      knapsack.resize(k+1, vector<int>(nc, 0));
+      knapsack = vector<vector<int>>(k+1, vector<int>(nc, 0));
       rep(i, 0, nc)//order of visit
       {
           int v = G[u][i];
@@ -138,7 +138,7 @@ void solve()
           dp[u][ki][0][0] = knapsack[ki][nc-1]; //best option after seeing all child possibility
       }
       //dp[1][1]
-      knapsack.resize(k, vector<int>(nc, 0));
+      knapsack = vector<vector<int>>(k, vector<int>(nc, 0));
       rep(i, 0, nc)//order of visit
       {
           int v = G[u][i];
@@ -159,8 +159,8 @@ void solve()
       }
       //dp[0][1]
       vector<vector<int>> knapsack01[2];
-      knapsack01[0].resize(k+1, vector<int>(nc, 0));
-      knapsack01[1].resize(k+1, vector<int>(nc, 0));
+      knapsack01[0] = vector<vector<int>>(k+1, vector<int>(nc, 0));
+      knapsack01[1] = vector<vector<int>>(k+1, vector<int>(nc, 0));
       rep(i, 0, nc)//order of visit
       {
           int v = G[u][i];
