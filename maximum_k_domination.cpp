@@ -78,6 +78,7 @@ void dfs_order(int u, int f, vector<int> &vs)
     return;
 }
 
+
 //check T
 void solve()
 {
@@ -100,7 +101,7 @@ void solve()
   // dp[u][k][0][0];
   // knap[k][i];
   vector<vector<array<array<int, 2>, 2>>> dp;
-  dp.resize(n, vector<array<array<int, 2>, 2>>(k+1, array<array<int, 2>, 2>({{{0,0},{0,0}}})));
+  dp.resize(n, vector<array<array<int, 2>, 2>>(k+1, array<array<int, 2>, 2>({{{-INF,-INF},{-INF,-INF}}})));
   for(int u: vs)
   {
       //debug(u);
@@ -111,8 +112,8 @@ void solve()
           rep(i, 0, k+1)
           {
               dp[u][i][0][0] = 0;
-              dp[u][i][0][1] = -INF; //or -INF
-              dp[u][i][1][1] = int(i >= 1);
+              dp[u][i][0][1] = -INF;
+              dp[u][i][1][1] = (i >= 1) ? 1 : -INF;
           }
           continue;
       }
@@ -120,7 +121,7 @@ void solve()
       //not base case
       vector<vector<int>> knapsack;
       //dp[0][0]
-      knapsack = vector<vector<int>>(k+1, vector<int>(nc, 0));
+      knapsack = vector<vector<int>>(k+1, vector<int>(nc, -INF));
       rep(i, 0, nc)//order of visit
       {
           int v = G[u][i];
@@ -138,7 +139,7 @@ void solve()
           dp[u][ki][0][0] = knapsack[ki][nc-1]; //best option after seeing all child possibility
       }
       //dp[1][1]
-      knapsack = vector<vector<int>>(k, vector<int>(nc, 0));
+      knapsack = vector<vector<int>>(k, vector<int>(nc, -INF));
       rep(i, 0, nc)//order of visit
       {
           int v = G[u][i];
@@ -151,7 +152,7 @@ void solve()
               }
           }
       }
-      //dp[u][0][1][1] = 0;
+      dp[u][0][1][1] = -INF;
       rep(ki, 1, k+1)
       {
           //have to use 1 for root u
@@ -159,8 +160,8 @@ void solve()
       }
       //dp[0][1]
       vector<vector<int>> knapsack01[2];
-      knapsack01[0] = vector<vector<int>>(k+1, vector<int>(nc, 0));
-      knapsack01[1] = vector<vector<int>>(k+1, vector<int>(nc, 0));
+      knapsack01[0] = vector<vector<int>>(k+1, vector<int>(nc, -INF)); //-INF not 0
+      knapsack01[1] = vector<vector<int>>(k+1, vector<int>(nc, -INF)); //-INF not 0
       rep(i, 0, nc)//order of visit
       {
           int v = G[u][i];
@@ -172,13 +173,21 @@ void solve()
                   int val1 = dp[v][ki2][1][1];
                   int option0 = (i == 0 ? 0 : knapsack01[0][ki-ki2][i-1]) + val0;
                   int option1 = max((i == 0 ? 0 :knapsack01[0][ki-ki2][i-1]) + val1,
-                                    (i == 0 ? 0 :knapsack01[1][ki-ki2][i-1] + max(val0,val1)));
+                                    (i == 0 ? -INF :knapsack01[1][ki-ki2][i-1] + max(val0,val1)));
                   knapsack01[0][ki][i] = max(knapsack01[0][ki][i], option0);
                   knapsack01[1][ki][i] = max(knapsack01[1][ki][i], option1);
               }
           }
       }
-      //dp[u][0][0][1] = 0;
+      if(u == 1){
+          cout << "debugging!!!!!!!!!" << endl;
+          rep(i, 0, nc) rep(ki, 0, k+1)
+          {
+              cout <<  "i: " << i << " ki:" << ki << " dp[ki][i]:";
+              cout << knapsack01[1][ki][i] << endl;
+          }
+      }
+      dp[u][0][0][1] = -INF;
       rep(ki, 1, k+1)
       {
           //have to use 0 for root u, +1 for root u is dominated
@@ -186,7 +195,7 @@ void solve()
       }
 
   }
-  for(int i : vs)
+  /*for(int i : vs)
   {
       cout << "subtree at vertex " << i << ":\n";
       rep(ki, 0, k+1)
@@ -197,7 +206,7 @@ void solve()
           debug(dp[i][ki][1][1]);
       }
       cout << endl;
-  }
+  }*/
   int global_ans = max({dp[ROOT][k][0][0], dp[ROOT][k][0][1], dp[ROOT][k][1][1]});
   cout << global_ans << endl;
 
@@ -221,14 +230,22 @@ signed main()
 }
 
 /*
-5 1
-0 1
-1 2 
-1 3
-3 4
+10 2
+3 0 3 2 4 1 5 2 6 1 6 5 7 6 8 1 9 4
 */
 
 /*
-10 2
-3 0 3 2 4 1 5 2 6 1 6 5 7 6 8 1 9 4
+13 4
+0 1 
+0 2
+0 3 
+0 4 
+1 5
+1 6 
+2 7
+2 8
+3 9
+3 10
+4 11
+4 12
 */
