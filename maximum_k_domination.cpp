@@ -179,14 +179,7 @@ void solve()
               }
           }
       }
-      if(u == 1){
-          cout << "debugging!!!!!!!!!" << endl;
-          rep(i, 0, nc) rep(ki, 0, k+1)
-          {
-              cout <<  "i: " << i << " ki:" << ki << " dp[ki][i]:";
-              cout << knapsack01[1][ki][i] << endl;
-          }
-      }
+      
       dp[u][0][0][1] = -INF;
       rep(ki, 1, k+1)
       {
