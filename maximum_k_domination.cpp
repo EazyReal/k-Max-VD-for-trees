@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #define LOCAL
+#define SHOW
 using namespace std;
 
 #define X first
@@ -188,7 +189,8 @@ void solve()
       }
 
   }
-  /*for(int i : vs)
+#ifdef SHOW
+  for(int i : vs)
   {
       cout << "subtree at vertex " << i << ":\n";
       rep(ki, 0, k+1)
@@ -199,7 +201,8 @@ void solve()
           debug(dp[i][ki][1][1]);
       }
       cout << endl;
-  }*/
+  }
+#endif
   int global_ans = max({dp[ROOT][k][0][0], dp[ROOT][k][0][1], dp[ROOT][k][1][1]});
   cout << global_ans << endl;
 
