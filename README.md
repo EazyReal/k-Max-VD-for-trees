@@ -8,7 +8,7 @@ tag:
 
 ## For Navigating
 - for the presentation file see [online presentation](https://hackmd.io/@ytlin/kMaxVD-presentation)
-- for the posters see the poster folder in this repo
+- for the poster see the poster folder in this repo and find `final_revise_after_print_A0.pdf`
 
 ---
 
