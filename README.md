@@ -6,7 +6,9 @@ tag:
 
 # Individual Study Report AM 2020 spring
 
-[online presentation](https://hackmd.io/@ytlin/kMaxVD-presentation)
+## For Navigating
+- for the presentation file see [online presentation](https://hackmd.io/@ytlin/kMaxVD-presentation)
+- for the posters see the poster folder in this repo
 
 ---
 
